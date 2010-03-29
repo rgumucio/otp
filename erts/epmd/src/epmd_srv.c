@@ -411,7 +411,9 @@ static int do_accept(EpmdVars *g,int listensock)
         dbg_perror(g,"error in accept");
         switch (errno) {
             case EAGAIN:
+#ifndef __WIN32__
             case ECONNABORTED:
+#endif
             case EINTR:
 	            return EPMD_FALSE;
             default:
